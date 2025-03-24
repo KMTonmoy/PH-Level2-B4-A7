@@ -27,31 +27,53 @@ CREATE TABLE orders (
     FOREIGN KEY (book_id) REFERENCES books (id) ON DELETE CASCADE
 );
 
--- 📂 PostgreSQL Problems & Sample Outputs Starts Here
-
--- Find books that are out of stock.
+-- 4. Find books that are out of stock
 SELECT title FROM books WHERE stock = 0;
 
--- Retrieve the most expensive book in the store.
+-- 5. Retrieve the most expensive book in the store
 SELECT * FROM books ORDER BY price DESC LIMIT 1;
 
--- Find the total number of orders placed by each customer.
+-- 6. Find the total number of orders placed by each customer
 SELECT c.name, COUNT(o.id) AS total_orders
 FROM customers c
     LEFT JOIN orders o ON c.id = o.customer_id
 GROUP BY
     c.name;
 
--- Calculate the total revenue generated from book sales.
+-- 7. Calculate the total revenue generated from book sales
 SELECT SUM(b.price * o.quantity) AS total_revenue
 FROM orders o
     JOIN books b ON o.book_id = b.id;
 
--- 📂 PostgreSQL Problems & Sample Outputs Ends Here
+-- 8. List all customers who have placed more than one order
+SELECT c.name, COUNT(o.id) AS orders_count
+FROM customers c
+    JOIN orders o ON c.id = o.customer_id
+GROUP BY
+    c.name
+HAVING
+    COUNT(o.id) > 1;
 
--- Insert Data In DATABASE STARTS Here
+-- 9. Find the average price of books in the store
+SELECT ROUND(AVG(price), 2) AS avg_book_price FROM books;
 
--- Insert Data In Books Table
+-- 10. Increase the price of all books published before 2000 by 10%
+UPDATE books
+SET
+    price = ROUND(price * 1.10, 2)
+WHERE
+    published_year < 2000;
+
+-- 11. Delete customers who haven't placed any orders
+DELETE FROM customers
+WHERE
+    id NOT IN (
+        SELECT DISTINCT
+            customer_id
+        FROM orders
+    );
+
+-- 12. Insert data into Books Table
 INSERT INTO
     books (
         title,
@@ -96,7 +118,7 @@ VALUES (
         2018
     );
 
--- Insert Data In Customers Table
+-- 13. Insert data into Customers Table
 INSERT INTO
     customers (name, email)
 VALUES ('Tonmoy', 'tonmoy@email.com'),
@@ -105,7 +127,7 @@ VALUES ('Tonmoy', 'tonmoy@email.com'),
     ('Joly', 'joly@email.com'),
     ('Onu', 'onu@email.com');
 
--- Insert Data In Orders Table
+-- 14. Insert data into Orders Table
 INSERT INTO
     orders (
         customer_id,
@@ -116,11 +138,10 @@ INSERT INTO
 VALUES (1, 2, 1, '2024-03-10'),
     (2, 1, 1, '2024-02-20'),
     (1, 3, 2, '2024-03-05');
--- Insert Data In DATABASE ENDS Here
--- GET All DATA From Tables Starts Here
+
+-- 15. Get all data from tables
 SELECT * FROM books;
 
 SELECT * FROM customers;
 
 SELECT * FROM orders;
--- GET All DATA From Tables Ends Here
