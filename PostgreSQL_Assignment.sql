@@ -27,6 +27,25 @@ CREATE TABLE orders (
     FOREIGN KEY (book_id) REFERENCES books (id) ON DELETE CASCADE
 );
 
+-- 📂 PostgreSQL Problems & Sample Outputs Starts Here
+
+-- Find books that are out of stock.
+SELECT title FROM books WHERE stock = 0;
+
+-- Retrieve the most expensive book in the store.
+SELECT * FROM books ORDER BY price DESC LIMIT 1;
+
+-- 📂 PostgreSQL Problems & Sample Outputs Ends Here
+
+
+
+
+
+
+
+
+
+
 -- Insert Data In DATABASE STARTS Here
 
 -- Insert Data In Books Table
@@ -94,12 +113,11 @@ INSERT INTO
 VALUES (1, 2, 1, '2024-03-10'),
     (2, 1, 1, '2024-02-20'),
     (1, 3, 2, '2024-03-05');
-
 -- Insert Data In DATABASE ENDS Here
-
 -- GET All DATA From Tables Starts Here
-
 SELECT * FROM books;
+
 SELECT * FROM customers;
+
 SELECT * FROM orders;
 -- GET All DATA From Tables Ends Here
