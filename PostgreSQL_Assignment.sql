@@ -35,16 +35,14 @@ SELECT title FROM books WHERE stock = 0;
 -- Retrieve the most expensive book in the store.
 SELECT * FROM books ORDER BY price DESC LIMIT 1;
 
+-- Find the total number of orders placed by each customer.
+SELECT c.name, COUNT(o.id) AS total_orders
+FROM customers c
+    LEFT JOIN orders o ON c.id = o.customer_id
+GROUP BY
+    c.name;
+
 -- 📂 PostgreSQL Problems & Sample Outputs Ends Here
-
-
-
-
-
-
-
-
-
 
 -- Insert Data In DATABASE STARTS Here
 
