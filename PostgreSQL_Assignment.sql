@@ -42,6 +42,11 @@ FROM customers c
 GROUP BY
     c.name;
 
+-- Calculate the total revenue generated from book sales.
+SELECT SUM(b.price * o.quantity) AS total_revenue
+FROM orders o
+    JOIN books b ON o.book_id = b.id;
+
 -- 📂 PostgreSQL Problems & Sample Outputs Ends Here
 
 -- Insert Data In DATABASE STARTS Here
